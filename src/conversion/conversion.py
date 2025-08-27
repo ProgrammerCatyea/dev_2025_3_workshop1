@@ -39,7 +39,7 @@ class Conversion:
         for valor, simbolo in valores:
             while numero >= valor:
                 romano += simbolo
-                numero -= valor  # Corregido 'valro' por 'valor'
+                numero -= valor 
         return romano
 
     def romano_a_decimal(self, romano):
