@@ -21,7 +21,7 @@ class Stats:
     
     def moda(self, numeros):
         if not numeros:
-            return 0
+            return None   
         conteo = {}
         for num in numeros:
             conteo[num] = conteo.get(num, 0) + 1
