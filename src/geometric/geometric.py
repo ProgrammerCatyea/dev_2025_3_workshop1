@@ -70,7 +70,7 @@ class Geometria:
     def distancia_entre_puntos(self, x1, y1, x2, y2):
         dx = x2 - x1
         dy = y2 - y1
-        return math.sqrt(dx*2 + dy*2)
+        return math.sqrt(dx**2 + dy**2)
     
     def punto_medio(self, x1, y1, x2, y2):
         xm = (x1 + x2) / 2
@@ -78,19 +78,26 @@ class Geometria:
         return (xm, ym)
     
     def pendiente_recta(self, x1, y1, x2, y2):
-        if x1 == x2:
-            return None  
-        return (y2 - y1) / (x2 - x1)
+        return (y2 - y1) / (x2 - x1)  
     
     def ecuacion_recta(self, x1, y1, x2, y2):
         A = y2 - y1
-        B = -(x2 - x1)
+        B = x1 - x2
         C = (x2 * y1) - (y2 * x1)
+
+        if A != 0 or B != 0:
+            gcd = math.gcd(int(A), math.gcd(int(B), int(C)))
+            if gcd != 0:
+                A //= gcd
+                B //= gcd
+                C //= gcd
         return (A, B, C)
     
     def area_poligono_regular(self, num_lados, lado, apotema):
         if num_lados < 3:
             return None  
+        if num_lados == 4:  
+            return lado * lado
         perimetro = num_lados * lado
         return (perimetro * apotema) / 2
     
