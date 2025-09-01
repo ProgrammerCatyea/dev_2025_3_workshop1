@@ -5,10 +5,7 @@ class Strings:
         return limpio == limpio[::-1]
 
     def invertir_cadena(self, texto):
-        invertida = ""
-        for i in range(len(texto) - 1, -1, -1):
-            invertida += texto[i]
-        return invertida
+        return texto[::-1]
 
     def contar_vocales(self, texto):
         vocales = "aeiouáéíóú"
@@ -28,24 +25,19 @@ class Strings:
         return len(palabras)
 
     def palabras_mayus(self, texto):
-        return " ".join(p[0].upper() + p[1:] if p else "" for p in texto.split(" "))
+        return " ".join(p.capitalize() for p in texto.split(" "))
 
     def eliminar_espacios_duplicados(self, texto):
-        resultado = ""
-        ultimo = ""
-        for ch in texto:
-            if ch == " " and ultimo == " ":
-                continue
-            resultado += ch
-            ultimo = ch
-        return resultado.strip()
+        import re
+        return re.sub(r' +', ' ', texto)
 
     def es_numero_entero(self, texto):
+        texto = texto.strip()
         if texto.startswith("-"):
             texto = texto[1:]
         if not texto:
             return False
-        return all("0" <= ch <= "9" for ch in texto)
+        return texto.isdigit()
 
     def cifrar_cesar(self, texto, desplazamiento):
         resultado = ""
@@ -61,8 +53,11 @@ class Strings:
         return self.cifrar_cesar(texto, -desplazamiento)
 
     def encontrar_subcadena(self, texto, subcadena):
+        if not subcadena:
+            return []
         posiciones = []
-        for i in range(len(texto) - len(subcadena) + 1):
-            if texto[i:i+len(subcadena)] == subcadena:
-                posiciones.append(i)
+        i = texto.find(subcadena)
+        while i != -1:
+            posiciones.append(i)
+            i = texto.find(subcadena, i + 1)
         return posiciones
