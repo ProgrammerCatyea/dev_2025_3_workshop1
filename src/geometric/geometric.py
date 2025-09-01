@@ -90,12 +90,28 @@ class Geometria:
         return (y2 - y1) / (x2 - x1)
 
     def ecuacion_recta(self, x1: float, y1: float, x2: float, y2: float) -> tuple:
-        
+       
         A = y2 - y1
         B = x1 - x2
-        C = (x2 * y1) - (x1 * y2)
-        return (A, B, C)
+        C = x2 * y1 - x1 * y2
 
+        if A == 0 and B != 0:
+            B = 1
+            C = -y1
+        elif B == 0 and A != 0:
+  
+            A = 1
+            C = -x1
+        else:
+            if A < 0 or (A == 0 and B < 0):
+                A, B, C = -A, -B, -C
+            from math import gcd
+            g = gcd(gcd(int(A), int(B)), int(C)) if all(float(v).is_integer() for v in (A, B, C)) else 1
+            if g > 1:
+                A //= g
+                B //= g
+                C //= g
+        return (A, B, C)
     def angulo_entre_rectas(self, m1: float, m2: float) -> float:
         if 1 + (m1 * m2) == 0:
             return 90.0
