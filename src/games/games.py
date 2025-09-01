@@ -10,8 +10,13 @@ class Games:
             return "muy bajo"
 
     def piedra_papel_tijera(self, jugador1, jugador2):
-        jugador1 = jugador1.lower()
-        jugador2 = jugador2.lower()
+        
+        jugador1 = jugador1.lower().strip()
+        jugador2 = jugador2.lower().strip()
+        opciones = {"piedra", "papel", "tijera"}
+
+        if jugador1 not in opciones or jugador2 not in opciones:
+            return "invalid"
 
         if jugador1 == jugador2:
             return "empate"
@@ -28,47 +33,90 @@ class Games:
             return "jugador2"
 
     def ta_te_ti_ganador(self, tablero):
-    
-        for fila in tablero:
-            if fila[0] == fila[1] == fila[2] and fila[0] != " ":
-                return fila[0]
+       
+        winners = set()
 
-        for col in range(3):
-            if tablero[0][col] == tablero[1][col] == tablero[2][col] and tablero[0][col] != " ":
-                return tablero[0][col]
+        
+        for i in range(3):
+            if tablero[i][0] == tablero[i][1] == tablero[i][2] and tablero[i][0] != " ":
+                winners.add(tablero[i][0])
+
+    
+        for j in range(3):
+            if tablero[0][j] == tablero[1][j] == tablero[2][j] and tablero[0][j] != " ":
+                winners.add(tablero[0][j])
+
 
         if tablero[0][0] == tablero[1][1] == tablero[2][2] and tablero[0][0] != " ":
-            return tablero[0][0]
-
+            winners.add(tablero[0][0])
         if tablero[0][2] == tablero[1][1] == tablero[2][0] and tablero[0][2] != " ":
-            return tablero[0][2]
+            winners.add(tablero[0][2])
 
-        for fila in tablero:
-            if " " in fila:
+       
+        x_count = sum(row.count('X') for row in tablero)
+        o_count = sum(row.count('O') for row in tablero)
+        hay_espacios = any(' ' in row for row in tablero)
+
+        if winners:
+            
+            if len(winners) > 1:
+                return "continua"
+            ganador = next(iter(winners))
+
+           
+            if x_count == o_count:
+                ultimo = 'O'
+            elif x_count == o_count + 1:
+                ultimo = 'X'
+            else:
+                ultimo = None
+
+  
+            if ultimo is None:
                 return "continua"
 
+          
+            if ganador == ultimo:
+                return ganador
+           
+            return "continua"
+
+    
+        if hay_espacios:
+            return "continua"
         return "empate"
 
     def generar_combinacion_mastermind(self, longitud, colores):
+    
         return [random.choice(colores) for _ in range(longitud)]
 
-    def validar_movimiento_torre_ajedrez(self, x1, y1, x2, y2, tablero):
-        if x1 == x2 and y1 == y2:
+    def validar_movimiento_torre_ajedrez(self, desde_fila, desde_col, hasta_fila, hasta_col, tablero):
+        
+
+        filas = len(tablero)
+        columnas = len(tablero[0]) if filas > 0 else 0
+        if not (0 <= desde_fila < filas and 0 <= desde_col < columnas and
+                0 <= hasta_fila < filas and 0 <= hasta_col < columnas):
             return False
 
-        if x1 != x2 and y1 != y2:
+  
+        if desde_fila == hasta_fila and desde_col == hasta_col:
             return False
 
-        if x1 == x2:  
-            paso = 1 if y2 > y1 else -1
-            for y in range(y1 + paso, y2, paso):
-                if tablero[x1][y] != " ":
+     
+        if desde_fila != hasta_fila and desde_col != hasta_col:
+            return False
+      
+        if desde_fila == hasta_fila:
+            paso = 1 if hasta_col > desde_col else -1
+            for c in range(desde_col + paso, hasta_col, paso):
+                if tablero[desde_fila][c] != " ":
                     return False
 
-        elif y1 == y2: 
-            paso = 1 if x2 > x1 else -1
-            for x in range(x1 + paso, x2, paso):
-                if tablero[x][y1] != " ":
+        else:
+            paso = 1 if hasta_fila > desde_fila else -1
+            for r in range(desde_fila + paso, hasta_fila, paso):
+                if tablero[r][desde_col] != " ":
                     return False
 
         return True
