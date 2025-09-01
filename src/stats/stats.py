@@ -1,30 +1,27 @@
 class Stats:
     def promedio(self, numeros):
-       
         if not numeros:  
-            return None
+            return 0
         suma = 0
         for n in numeros:
             suma += n
         prom = suma / len(numeros)
-        return prom
+        return float(prom)
     
     def mediana(self, numeros):
-        
         if not numeros:
-            return None
+            return 0
         valores = sorted(numeros)
         n_datos = len(valores)
         mitad = n_datos // 2
         if n_datos % 2 == 0: 
             return (valores[mitad - 1] + valores[mitad]) / 2
         else:  
-            return valores[mitad]
+            return float(valores[mitad])
     
     def moda(self, numeros):
-        
         if not numeros:
-            return None
+            return 0
         conteo = {}
         for num in numeros:
             conteo[num] = conteo.get(num, 0) + 1
@@ -37,20 +34,18 @@ class Stats:
         return mas_repetido
     
     def desviacion_estandar(self, numeros):
-        
         if not numeros:
-            return None
+            return 0
         media = self.promedio(numeros)
         suma_cuadrados = 0
         for x in numeros:
             suma_cuadrados += (x - media) ** 2
         var = suma_cuadrados / len(numeros)
-        return var ** (1/2)  
+        return var ** 0.5  
     
     def varianza(self, numeros):
-       
         if not numeros:
-            return None
+            return 0
         media = self.promedio(numeros)
         suma = 0
         for x in numeros:
@@ -58,9 +53,8 @@ class Stats:
         return suma / len(numeros)
     
     def rango(self, numeros):
-    
         if not numeros:
-            return None
+            return 0
         maximo = max(numeros)
         minimo = min(numeros)
         return maximo - minimo
