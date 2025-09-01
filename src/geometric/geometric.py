@@ -1,9 +1,13 @@
 import math
 
 class Geometria:
-   
+
+    def es_triangulo_valido(self, a: float, b: float, c: float) -> bool:
+        """Verifica la desigualdad triangular"""
+        return a + b > c and a + c > b and b + c > a
+
     def area_cuadrado(self, lado: float) -> float:
-        return lado * lado
+        return lado ** 2
 
     def area_rectangulo(self, base: float, altura: float) -> float:
         return base * altura
@@ -14,13 +18,20 @@ class Geometria:
     def area_circulo(self, radio: float) -> float:
         return math.pi * (radio ** 2)
 
+    def area_trapecio(self, base_mayor: float, base_menor: float, altura: float) -> float:
+        return ((base_mayor + base_menor) * altura) / 2
+
+    def area_rombo(self, d1: float, d2: float) -> float:
+        return (d1 * d2) / 2
+
+    def area_pentagono_regular(self, lado: float, apotema: float) -> float:
+        return (5 * lado * apotema) / 2
+
+    def area_hexagono_regular(self, lado: float, apotema: float) -> float:
+        return (6 * lado * apotema) / 2
+
     def area_poligono_regular(self, n: int, lado: float, apotema: float) -> float:
-        """
-        Fórmula según los tests:
-        Área = n * (lado * apotema)
-        (NOTA: normalmente sería dividido entre 2, pero los tests esperan sin dividir)
-        """
-        return n * (lado * apotema)
+        return (n * lado * apotema) / 2
 
     def perimetro_cuadrado(self, lado: float) -> float:
         return 4 * lado
@@ -34,30 +45,55 @@ class Geometria:
     def perimetro_circulo(self, radio: float) -> float:
         return 2 * math.pi * radio
 
+    def perimetro_pentagono_regular(self, lado: float) -> float:
+        return 5 * lado
+
+    def perimetro_hexagono_regular(self, lado: float) -> float:
+        return 6 * lado
+
+    def perimetro_poligono_regular(self, n: int, lado: float) -> float:
+        return n * lado
+
+    def volumen_cubo(self, lado: float) -> float:
+        return lado ** 3
+
+    def area_superficie_cubo(self, lado: float) -> float:
+        return 6 * (lado ** 2)
+
+    def volumen_esfera(self, radio: float) -> float:
+        return (4/3) * math.pi * (radio ** 3)
+
+    def area_superficie_esfera(self, radio: float) -> float:
+        return 4 * math.pi * (radio ** 2)
+
+    def volumen_cilindro(self, radio: float, altura: float) -> float:
+        return math.pi * (radio ** 2) * altura
+
+    def area_superficie_cilindro(self, radio: float, altura: float) -> float:
+        return 2 * math.pi * radio * (radio + altura)
 
     def distancia_entre_puntos(self, x1: float, y1: float, x2: float, y2: float) -> float:
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
+    def punto_medio(self, x1: float, y1: float, x2: float, y2: float) -> tuple:
+        return ((x1 + x2) / 2, (y1 + y2) / 2)
+
     def pendiente_recta(self, x1: float, y1: float, x2: float, y2: float) -> float:
         if x2 - x1 == 0:
-            raise ValueError("Pendiente indefinida (división por cero)")
+            raise ZeroDivisionError("Pendiente indefinida (recta vertical)")
         return (y2 - y1) / (x2 - x1)
 
     def ecuacion_recta(self, x1: float, y1: float, x2: float, y2: float) -> tuple:
-        """
-        Ecuación general de la recta que pasa por (x1, y1) y (x2, y2):
-        A*x + B*y + C = 0
-        """
         A = y2 - y1
         B = x1 - x2
         C = (x2 * y1) - (x1 * y2)
+        
+        g = math.gcd(math.gcd(int(A), int(B)), int(C))
+        if g != 0:
+            A, B, C = A // g, B // g, C // g
         return (A, B, C)
 
-
     def angulo_entre_rectas(self, m1: float, m2: float) -> float:
-        """
-        Fórmula: tan(θ) = |(m1 - m2) / (1 + m1*m2)|
-        """
         if 1 + (m1 * m2) == 0:
             return 90.0
         angulo_rad = math.atan(abs((m1 - m2) / (1 + m1 * m2)))
