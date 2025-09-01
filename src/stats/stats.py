@@ -1,7 +1,7 @@
 class Stats:
     def promedio(self, numeros):
-        
-        if not numeros:  # lista vacía
+       
+        if not numeros:  
             return None
         suma = 0
         for n in numeros:
@@ -16,9 +16,9 @@ class Stats:
         valores = sorted(numeros)
         n_datos = len(valores)
         mitad = n_datos // 2
-        if n_datos % 2 == 0:  # par
+        if n_datos % 2 == 0: 
             return (valores[mitad - 1] + valores[mitad]) / 2
-        else:  # impar
+        else:  
             return valores[mitad]
     
     def moda(self, numeros):
@@ -45,12 +45,10 @@ class Stats:
         for x in numeros:
             suma_cuadrados += (x - media) ** 2
         var = suma_cuadrados / len(numeros)
-        return var ** (1/2)  # en vez de math.sqrt(var)
+        return var ** (1/2)  
     
     def varianza(self, numeros):
-        """
-        Calcula la varianza de una lista de números.
-        """
+       
         if not numeros:
             return None
         media = self.promedio(numeros)
@@ -60,9 +58,7 @@ class Stats:
         return suma / len(numeros)
     
     def rango(self, numeros):
-        """
-        Calcula el rango de un conjunto.
-        """
+    
         if not numeros:
             return None
         maximo = max(numeros)
