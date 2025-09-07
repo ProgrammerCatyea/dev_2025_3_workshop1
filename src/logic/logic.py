@@ -1,31 +1,31 @@
 class Logica:
 
     
-    def AND(self, a, b):
-        resultado = (a and b)
+    def AND(self, ar, b):
+        resultado = (ar and b)
         return bool(resultado)
     
-    def OR(self, a, b):
-        resultado = a or b
+    def OR(self, ar, b):
+        resultado = ar or b
         return bool(resultado)
     
-    def NOT(self, a):
-        return not a
+    def NOT(self, ar):
+        return not ar
     
-    def XOR(self, a, b):
-        return a != b
+    def XOR(self, ar, b):
+        return ar != b
     
-    def NAND(self, a, b):
-        return not (a and b)
+    def NAND(self, ar, b):
+        return not (ar and b)
     
-    def NOR(self, a, b):
-        return not (a or b)
+    def NOR(self, ar, b):
+        return not (ar or b)
     
-    def XNOR(self, a, b):
-        return a == b
+    def XNOR(self, ar, b):
+        return ar == b
     
-    def implicacion(self, a, b):
-        return (not a) or b
+    def implicacion(self, ar, b):
+        return (not ar) or b
     
-    def bi_implicacion(self, a, b):
-        return a == b
+    def bi_implicacion(self, ar, b):
+        return ar== b
